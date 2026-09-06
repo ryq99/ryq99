@@ -15,13 +15,14 @@
 
 ### 👋 About me
 
-- 🔬 Full-stack Data Scientist — I **build ML systems** end to end: models that ship, not just notebooks.
-- 🧠 Interests: applied ML, experimentation & causal inference, LLM-powered tooling.
-- 📈 I like turning messy data into clear decisions and reusable pipelines.
-- 💬 Ask me about: Python, ML modeling, A/B testing, and data storytelling.
+- I'm a full-stack Data Scientist building **ML systems** end to end.
+- I've been learning and applying data science, machine learning, and deep learning since 2017 — starting in a small bioengineering research lab at Mizzou, then studying information systems at JHU.
+- I've worked in fintech and real estate, and I'm now in the entertainment industry.
+- Lately I've been learning LLMs and agentic systems.
 
 ---
 
 ### 🔒 My workspace
 
 ➡️ **[Open my kb_ notes index →](https://github.com/ryq99/kb_index)** — quick access to all my `kb_*` notes repos. Visible only to me; the link 404s for everyone else.
+
