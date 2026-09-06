@@ -38,7 +38,7 @@ jobs:
           python update_repo_profile.py \
             --user ryq99 --readme kb_index/README.md --visibility private \
             --include-prefixes kb_ --exclude-names kb_index \
-            --show-updated --sort-by updated
+            --columns repo,description,updated --sort-by updated
 
       - name: Commit kb_ index if changed
         working-directory: kb_index

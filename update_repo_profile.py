@@ -11,7 +11,7 @@ Usage:
     # Private workspace index (only kb_ repos):
     GITHUB_TOKEN=ghp_xxx python update_repo_profile.py \
         --user YOUR_USERNAME --readme README.md --visibility private \
-        --include-prefixes kb_ --show-updated --sort-by updated
+        --include-prefixes kb_ --columns repo,description,updated --sort-by updated
 
 The script replaces whatever sits between these two markers in the README:
     <!-- REPOS:START -->
@@ -79,14 +79,24 @@ def included(repo, include_prefixes):
     return any(repo["name"].startswith(p) for p in include_prefixes)
 
 
-def build_table(repos, show_visibility, show_updated, sort_by):
-    cols = ["Repo", "Description", "Language", "⭐"]
-    if show_updated:
-        cols.append("Updated")
-    if show_visibility:
-        cols.append("Visibility")
-    header = "| " + " | ".join(cols) + " |"
-    sep = "|" + "|".join("---" for _ in cols) + "|"
+# Available table columns: key -> (header, cell-renderer).
+COLUMNS = {
+    "repo": ("Repo", lambda r: f"[{r['name']}]({r['html_url']})"),
+    "description": ("Description",
+                    lambda r: (r.get("description") or "").replace("|", "\\|")
+                              .replace("\n", " ").strip() or "—"),
+    "language": ("Language", lambda r: r.get("language") or "—"),
+    "stars": ("⭐", lambda r: str(r["stargazers_count"])),
+    "updated": ("Updated",
+                lambda r: (r.get("pushed_at") or r.get("updated_at") or "—")[:10]),
+    "visibility": ("Visibility",
+                   lambda r: "🔒 Private" if r["private"] else "🌐 Public"),
+}
+
+
+def build_table(repos, columns, sort_by):
+    header = "| " + " | ".join(COLUMNS[c][0] for c in columns) + " |"
+    sep = "|" + "|".join("---" for _ in columns) + "|"
 
     if sort_by == "updated":
         key = lambda x: x.get("pushed_at") or x.get("updated_at") or ""
@@ -94,17 +104,7 @@ def build_table(repos, show_visibility, show_updated, sort_by):
     else:  # stars
         ordered = sorted(repos, key=lambda x: (-x["stargazers_count"], x["name"].lower()))
 
-    rows = []
-    for r in ordered:
-        name = f"[{r['name']}]({r['html_url']})"
-        desc = (r.get("description") or "").replace("|", "\\|").replace("\n", " ").strip() or "—"
-        lang = r.get("language") or "—"
-        cells = [name, desc, lang, str(r["stargazers_count"])]
-        if show_updated:
-            cells.append((r.get("pushed_at") or r.get("updated_at") or "—")[:10])
-        if show_visibility:
-            cells.append("🔒 Private" if r["private"] else "🌐 Public")
-        rows.append("| " + " | ".join(cells) + " |")
+    rows = ["| " + " | ".join(COLUMNS[c][1](r) for c in columns) + " |" for r in ordered]
 
     noun = "repository" if len(repos) == 1 else "repositories"
     count_line = f"_{len(repos)} {noun} · updated automatically_"
@@ -147,13 +147,17 @@ def main():
     p.add_argument("--include-prefixes", default="",
                    help="whitelist: keep ONLY repos with these name prefixes, "
                         "e.g. 'kb_' (used for the private workspace index)")
-    p.add_argument("--show-visibility", action="store_true",
-                   help="add a Public/Private column (use for private index)")
-    p.add_argument("--show-updated", action="store_true",
-                   help="add a last-updated (YYYY-MM-DD) column")
+    p.add_argument("--columns", default="repo,description,language,stars",
+                   help="comma-separated table columns, in order. Available: "
+                        + ", ".join(COLUMNS))
     p.add_argument("--sort-by", default="stars", choices=["stars", "updated"],
                    help="row ordering (default: stars)")
     args = p.parse_args()
+
+    columns = [c.strip() for c in args.columns.split(",") if c.strip()]
+    unknown = [c for c in columns if c not in COLUMNS]
+    if unknown:
+        sys.exit(f"Unknown column(s): {unknown}. Available: {', '.join(COLUMNS)}")
 
     token = os.environ.get("GITHUB_TOKEN")
     if not token:
@@ -173,7 +177,7 @@ def main():
           f"(include prefixes: {include_prefixes or '—'}, "
           f"excluded topics: {sorted(topics)}).")
 
-    table = build_table(repos, args.show_visibility, args.show_updated, args.sort_by)
+    table = build_table(repos, columns, args.sort_by)
     inject(args.readme, table)
 
 
