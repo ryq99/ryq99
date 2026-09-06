@@ -8,7 +8,6 @@
 </a>
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Ruichen%20Yang-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ruichenyangdatascientist/)
-[![Email](https://img.shields.io/badge/Email-yrc602%40gmail.com-EA4335?style=flat&logo=gmail&logoColor=white)](mailto:yrc602@gmail.com)
 ![Location](https://img.shields.io/badge/Seattle%2C%20WA-181717?style=flat&logo=googlemaps&logoColor=white)
 
 </div>
