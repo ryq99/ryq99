@@ -4,7 +4,7 @@
 <div align="center">
 
 <a href="https://www.linkedin.com/in/ruichenyangdatascientist/">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=26&pause=1200&color=2E9EF7&center=true&vCenter=true&width=580&lines=Ruichen+Yang;Data+Scientist+building+ML+systems;From+models+to+production." alt="Ruichen Yang — Data Scientist building ML systems" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=26&pause=1200&color=2E9EF7&center=true&vCenter=true&width=580&lines=Ruichen+Yang;ML+Engineer;From+models+to+production." alt="Ruichen Yang — ML Engineer" />
 </a>
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Ruichen%20Yang-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ruichenyangdatascientist/)
@@ -15,7 +15,7 @@
 
 ### 👋 About me
 
-- 🔬 Data Scientist whose day-to-day is **building ML systems** — models that ship, not just notebooks.
+- 🔬 ML Engineer — I **build ML systems**: models that ship, not just notebooks.
 - 🧠 Interests: applied ML, experimentation & causal inference, LLM-powered tooling.
 - 📈 I like turning messy data into clear decisions and reusable pipelines.
 - 💬 Ask me about: Python, ML modeling, A/B testing, and data storytelling.
