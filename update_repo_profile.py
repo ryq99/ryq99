@@ -4,10 +4,14 @@ Generate a Markdown table of your GitHub repos and inject it into a README.
 Zero dependencies (stdlib only). Auth via the GITHUB_TOKEN env var.
 
 Usage:
-    GITHUB_TOKEN=ghp_xxx python update_repos.py \
-        --user YOUR_USERNAME \
-        --readme README.md \
-        --visibility public          # public | private | all
+    # Public profile table:
+    GITHUB_TOKEN=ghp_xxx python update_repo_profile.py \
+        --user YOUR_USERNAME --readme README.md --visibility public
+
+    # Private workspace index (only kb_ repos):
+    GITHUB_TOKEN=ghp_xxx python update_repo_profile.py \
+        --user YOUR_USERNAME --readme README.md --visibility private \
+        --include-prefixes kb_ --show-updated --sort-by updated
 
 The script replaces whatever sits between these two markers in the README:
     <!-- REPOS:START -->
@@ -68,25 +72,42 @@ def excluded(repo, names, topics, prefixes):
     return False
 
 
-def build_table(repos, show_visibility):
-    header = "| Repo | Description | Language | ⭐ |"
-    sep = "|------|-------------|----------|----|"
+def included(repo, include_prefixes):
+    """Whitelist: keep only repos matching an include prefix (empty => keep all)."""
+    if not include_prefixes:
+        return True
+    return any(repo["name"].startswith(p) for p in include_prefixes)
+
+
+def build_table(repos, show_visibility, show_updated, sort_by):
+    cols = ["Repo", "Description", "Language", "⭐"]
+    if show_updated:
+        cols.append("Updated")
     if show_visibility:
-        header = "| Repo | Description | Language | ⭐ | Visibility |"
-        sep = "|------|-------------|----------|----|------------|"
+        cols.append("Visibility")
+    header = "| " + " | ".join(cols) + " |"
+    sep = "|" + "|".join("---" for _ in cols) + "|"
+
+    if sort_by == "updated":
+        key = lambda x: x.get("pushed_at") or x.get("updated_at") or ""
+        ordered = sorted(repos, key=key, reverse=True)
+    else:  # stars
+        ordered = sorted(repos, key=lambda x: (-x["stargazers_count"], x["name"].lower()))
 
     rows = []
-    for r in sorted(repos, key=lambda x: (-x["stargazers_count"], x["name"].lower())):
+    for r in ordered:
         name = f"[{r['name']}]({r['html_url']})"
-        desc = (r.get("description") or "").replace("|", "\\|").strip() or "—"
+        desc = (r.get("description") or "").replace("|", "\\|").replace("\n", " ").strip() or "—"
         lang = r.get("language") or "—"
-        stars = r["stargazers_count"]
-        cells = [name, desc, lang, str(stars)]
+        cells = [name, desc, lang, str(r["stargazers_count"])]
+        if show_updated:
+            cells.append((r.get("pushed_at") or r.get("updated_at") or "—")[:10])
         if show_visibility:
             cells.append("🔒 Private" if r["private"] else "🌐 Public")
         rows.append("| " + " | ".join(cells) + " |")
 
-    count_line = f"_{len(repos)} repositories_"
+    noun = "repository" if len(repos) == 1 else "repositories"
+    count_line = f"_{len(repos)} {noun} · updated automatically_"
     return "\n".join([header, sep, *rows, "", count_line])
 
 
@@ -123,8 +144,15 @@ def main():
                    help="comma-separated topics; any match skips the repo")
     p.add_argument("--exclude-prefixes", default="",
                    help="comma-separated name prefixes to skip, e.g. 'wip-,tmp-'")
+    p.add_argument("--include-prefixes", default="",
+                   help="whitelist: keep ONLY repos with these name prefixes, "
+                        "e.g. 'kb_' (used for the private workspace index)")
     p.add_argument("--show-visibility", action="store_true",
                    help="add a Public/Private column (use for private index)")
+    p.add_argument("--show-updated", action="store_true",
+                   help="add a last-updated (YYYY-MM-DD) column")
+    p.add_argument("--sort-by", default="stars", choices=["stars", "updated"],
+                   help="row ordering (default: stars)")
     args = p.parse_args()
 
     token = os.environ.get("GITHUB_TOKEN")
@@ -134,15 +162,18 @@ def main():
     names = {s.strip() for s in args.exclude_names.split(",") if s.strip()}
     topics = {s.strip() for s in args.exclude_topics.split(",") if s.strip()}
     prefixes = [s.strip() for s in args.exclude_prefixes.split(",") if s.strip()]
+    include_prefixes = [s.strip() for s in args.include_prefixes.split(",") if s.strip()]
 
     repos = fetch_repos(token, args.visibility)
     repos = [r for r in repos if not r.get("fork")
+             and included(r, include_prefixes)
              and not excluded(r, names, topics, prefixes)]
 
     print(f"{len(repos)} repos after filtering "
-          f"(excluded topics: {sorted(topics)}).")
+          f"(include prefixes: {include_prefixes or '—'}, "
+          f"excluded topics: {sorted(topics)}).")
 
-    table = build_table(repos, args.show_visibility)
+    table = build_table(repos, args.show_visibility, args.show_updated, args.sort_by)
     inject(args.readme, table)
 
 
