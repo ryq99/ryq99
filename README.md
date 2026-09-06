@@ -23,19 +23,6 @@
 - 📈 I like turning messy data into clear decisions and reusable pipelines.
 - 💬 Ask me about: Python, ML modeling, A/B testing, and data storytelling.
 
-### 🛠️ Tech stack
-
-![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
-![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=flat&logo=pytorch&logoColor=white)
-![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=flat&logo=scikitlearn&logoColor=white)
-![pandas](https://img.shields.io/badge/pandas-150458?style=flat&logo=pandas&logoColor=white)
-![NumPy](https://img.shields.io/badge/NumPy-013243?style=flat&logo=numpy&logoColor=white)
-![SQL](https://img.shields.io/badge/SQL-4479A1?style=flat&logo=postgresql&logoColor=white)
-![Spark](https://img.shields.io/badge/Spark-E25A1C?style=flat&logo=apachespark&logoColor=white)
-![AWS](https://img.shields.io/badge/AWS-232F3E?style=flat&logo=amazonaws&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
-![Jupyter](https://img.shields.io/badge/Jupyter-F37626?style=flat&logo=jupyter&logoColor=white)
-
 ---
 
 <div align="center">
@@ -46,14 +33,6 @@
 <img height="165" src="https://streak-stats.demolab.com?user=ryq99&hide_border=true&theme=tokyonight" alt="GitHub streak" />
 
 </div>
-
----
-
-### 🔒 My workspace
-
-Fast-access index of my private working repos (the `kb_*` set). **Visible only to me** — the link 404s for everyone else.
-
-➡️ **[Open my kb_ workspace index](https://github.com/ryq99/kb_index)**
 
 ---
 
