@@ -19,6 +19,7 @@
 - I've been learning and applying data science, machine learning, and deep learning since 2017 — starting in a small bioengineering research lab at Mizzou, then studying information systems at JHU.
 - I've worked in fintech and real estate, and I'm now in the entertainment industry.
 - Lately I've been learning LLMs and agentic systems.
+- I can FLOW with data and breaking all day!
 
 ---
 
