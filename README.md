@@ -7,8 +7,6 @@
   <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&pause=1200&color=2E9EF7&center=true&vCenter=true&width=720&lines=Ruichen+Yang;Full+Stack+Data+Scientist+Building+ML+Systems" alt="Ruichen Yang — Full Stack Data Scientist building ML systems" />
 </a>
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Ruichen%20Yang-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ruichenyangdatascientist/)
-
 </div>
 
 ---
