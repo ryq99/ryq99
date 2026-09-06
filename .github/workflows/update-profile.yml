@@ -1,8 +1,7 @@
-name: Update profile
+name: Update kb_ index
 
-# Refreshes two things daily:
-#   1. the PUBLIC repos table in this repo's README (github.com/ryq99)
-#   2. the PRIVATE kb_ workspace index in ryq99/kb_index
+# Refreshes the PRIVATE kb_ workspace index in ryq99/kb_index daily.
+# The public profile (github.com/ryq99) just links to that repo — nothing to generate there.
 #
 # Requires a repo secret PROFILE_TOKEN: a PAT (classic: `repo` scope, or
 # fine-grained with Contents:read/write on ryq99/* and access to all repos).
@@ -24,28 +23,7 @@ jobs:
         with:
           python-version: "3.12"
 
-      # ---- 1. Public profile table ----
-      - name: Regenerate public repos table
-        env:
-          GITHUB_TOKEN: ${{ secrets.PROFILE_TOKEN }}
-        run: |
-          python update_repo_profile.py \
-            --user ryq99 --readme README.md --visibility public \
-            --exclude-names ryq99,kb_index --sort-by updated
-
-      - name: Commit public profile if changed
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if ! git diff --quiet README.md; then
-            git add README.md
-            git commit -m "chore: refresh public repos table [skip ci]"
-            git push
-          else
-            echo "Public README unchanged."
-          fi
-
-      # ---- 2. Private kb_ workspace index (in ryq99/kb_index) ----
+      # ---- Private kb_ workspace index (in ryq99/kb_index) ----
       - name: Check out kb_index repo
         uses: actions/checkout@v4
         with:
