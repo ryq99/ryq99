@@ -18,12 +18,12 @@
 - I'm a full-stack Data Scientist building **ML systems** end to end.
 - I've been learning and applying data science, machine learning, and deep learning since 2017 — starting in a small bioengineering research lab at Mizzou, then studying information systems at JHU.
 - I've worked in fintech and real estate, and I'm now in the entertainment industry.
-- Lately I've been learning LLMs and agentic systems.
+- Lately I've been learning llms and agentic systems.
 - I can FLOW with data and breaking all day!
 
 ---
 
-### 🔒 My workspace
+### 🔒 My Knowledge Base
 
-➡️ **[Open my kb_ notes index →](https://github.com/ryq99/kb_index)** — quick access to all my `kb_*` notes repos. Visible only to me; the link 404s for everyone else.
+➡️ **[Open my kb_* notes index →](https://github.com/ryq99/kb_index)**
 
