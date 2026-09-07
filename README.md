@@ -4,7 +4,7 @@
 <div align="center">
 
 <a href="https://www.linkedin.com/in/ruichenyangdatascientist/">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&pause=1200&color=2E9EF7&center=true&vCenter=true&width=720&lines=Ruichen+Yang;Full+Stack+Data+Scientist+Building+ML+Systems" alt="Ruichen Yang — Full Stack Data Scientist building ML systems" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&pause=1200&color=2E9EF7&center=true&vCenter=true&width=720&lines=Ruichen+Yang;Full+Stack+Data+Scientist;Building+Machine+Learning+Systems" alt="Ruichen Yang — Full Stack Data Scientist building ML systems" />
 </a>
 
 </div>
